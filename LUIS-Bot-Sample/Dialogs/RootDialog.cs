@@ -33,7 +33,7 @@ namespace LUIS_Bot_Sample.Dialogs
                 LuisService luis = new LuisService(new LuisModelAttribute("86684636-488d-48b3-a4c6-233ef496d3d1", "5f3fca65f0a64d68ab6d4d474b1b0fa6", LuisApiVersion.V2, "westus", true, false, true, true));
                 var luisResult = await luis.QueryAsync(activity.Text, System.Threading.CancellationToken.None);
 
-                await context.PostAsync($"Luis Result received prepared.. Processing intents");
+                await context.PostAsync($"Luis Result received .. Processing intents");
 
                 switch (luisResult.TopScoringIntent.Intent)
                 {
@@ -48,7 +48,6 @@ namespace LUIS_Bot_Sample.Dialogs
                         await context.PostAsync($"Please repeat your query. I could not recognize your intent...");
                         break;
                 }
-
             }
             catch (Exception exc)
             {
@@ -61,4 +60,29 @@ namespace LUIS_Bot_Sample.Dialogs
             //await context.Forward(new RootLuisDialog(), MessageReceivedAsync, activity, System.Threading.CancellationToken.None);
         }
     }
+
+    [Serializable]
+    public class ErrorDialog : IDialog<object>
+    {
+        public Task StartAsync(IDialogContext context)
+        {
+            context.Wait(MessageReceivedAsync);
+
+            return Task.CompletedTask;
+        }
+
+        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
+        {
+            var activity = await result as Activity;
+
+            // calculate something for us to return
+            int length = (activity.Text ?? string.Empty).Length;
+
+            // return our reply to the user
+            await context.PostAsync($"Received an exception\n{activity.Text}" );
+            context.Wait(MessageReceivedAsync);
+            //await context.Forward(new RootLuisDialog(), MessageReceivedAsync, activity, System.Threading.CancellationToken.None);
+        }
+    }
+
 }
