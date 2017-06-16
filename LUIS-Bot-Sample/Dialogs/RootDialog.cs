@@ -54,15 +54,29 @@ namespace LUIS_Bot_Sample.Dialogs
                     case "HomeAutomation.TurnOn":
                         await context.PostAsync($"Turning on the device..");
 
-                        //EntityRecommendation device;
-                        //if (Microsoft.Bot.Builder.Luis.Extensions.TryFindEntity(luisResult, "HomeAutomation.Device", out device))
-                        //{
-                        //    await context.PostAsync($"Turning on the {device}");
-                        //}
-                        //else
-                        //{
-                        //    await context.PostAsync($"I did not recognize a device to turn on...\nPlease repeat your command with the device name");
-                        //}
+                        var entities = luisResult.Entities;
+
+                        bool found = false;
+                        string device = "";
+
+                        foreach (var x in entities)
+                        {
+                            if (x.Type == "HomeAutomation.Device")
+                            {
+                                found = true;
+                                device = x.Entity;
+                                break;
+                            }
+                        }
+
+                        if (found)
+                        {
+                            await context.PostAsync($"Turning on the {device}");
+                        }
+                        else
+                        {
+                            await context.PostAsync($"I did not recognize a device to turn on...\nPlease repeat your command with the device name");
+                        }
                         break;
 
                     default:
