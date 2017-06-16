@@ -52,7 +52,7 @@ namespace LUIS_Bot_Sample.Dialogs
                         break;
 
                     case "HomeAutomation.TurnOn":
-                        await context.PostAsync($"Turning on the device..");
+                        //await context.PostAsync($"Turning on the device..");
 
                         var entities = luisResult.Entities;
 
