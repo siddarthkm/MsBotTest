@@ -9,7 +9,7 @@ using Microsoft.Bot.Builder.FormFlow;
 
 namespace LUIS_Bot_Sample.Dialogs
 {
-    [LuisModel("86684636-488d-48b3-a4c6-233ef496d3d1", "5f3fca65f0a64d68ab6d4d474b1b0fa6", LuisApiVersion.V2, "westus", true, false, true, true)]
+    [LuisModel("86684636-488d-48b3-a4c6-233ef496d3d1", "5f3fca65f0a64d68ab6d4d474b1b0fa6")]
     [Serializable]
     public class RootLuisDialog : LuisDialog<object>
     {
