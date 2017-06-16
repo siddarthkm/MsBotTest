@@ -4,6 +4,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Builder.Luis;
+using Microsoft.Bot.Builder.Luis.Models;
 
 
 
@@ -48,8 +49,19 @@ namespace LUIS_Bot_Sample.Dialogs
                     case "Greeting":
                         await context.PostAsync($"Greetings to you too. Anything I can do for you?");
                         break;
+                    case "HomeAutomation.TurnOn":
+                        EntityRecommendation device;
+                        if (luisResult.TryFindEntity("HomeAutomation.Device", out device))
+                        {
+                            await context.PostAsync($"Turning on the {device}");
+                        }
+                        else
+                        {
+                            await context.PostAsync($"I did not recognize a device to turn on...\nPlease repeat your command with the device name");
+                        }
+                        break;
                     default:
-                        await context.PostAsync($"Please repeat your query. I could not recognize your intent...");
+                        await context.PostAsync($"I recognized your intent as {luisResult.TopScoringIntent.Intent}...\nHowever I'm not configured to reply to it");
                         break;
                 }
             }
