@@ -26,7 +26,7 @@ namespace LUIS_Bot_Sample
                 }
                 catch (System.Exception exc)
                 {
-                    activity.Text = $"{exc}";
+                    activity.Text += $"{exc}";
                     await Conversation.SendAsync(activity, () => new Dialogs.ErrorDialog());
                 }
             }

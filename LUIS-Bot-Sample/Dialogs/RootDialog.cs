@@ -67,6 +67,10 @@ namespace LUIS_Bot_Sample.Dialogs
     {
         public Task StartAsync(IDialogContext context)
         {
+
+            context.PostAsync($"Starting Exception Bot").Wait();
+
+
             context.Wait(MessageReceivedAsync);
 
             return Task.CompletedTask;
@@ -80,7 +84,11 @@ namespace LUIS_Bot_Sample.Dialogs
             int length = (activity.Text ?? string.Empty).Length;
 
             // return our reply to the user
-            await context.PostAsync($"Received an exception\n{activity.Text}" );
+
+            await context.PostAsync($"Received an exception. MessageRewceived func of Error Dialog");
+
+
+            await context.PostAsync($"Received an exception\n{activity?.Text}" );
             context.Wait(MessageReceivedAsync);
             //await context.Forward(new RootLuisDialog(), MessageReceivedAsync, activity, System.Threading.CancellationToken.None);
         }
