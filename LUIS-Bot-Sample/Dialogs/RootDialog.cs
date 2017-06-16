@@ -28,7 +28,7 @@ namespace LUIS_Bot_Sample.Dialogs
             var activity = await result as Activity;
 
             // calculate something for us to return
-            int length = (activity.Text ?? string.Empty).Length;
+            //int length = (activity.Text ?? string.Empty).Length;
 
             //await context.PostAsync($"Starting Luis query");
 
