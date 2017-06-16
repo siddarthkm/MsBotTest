@@ -26,34 +26,34 @@ namespace LUIS_Bot_Sample.Dialogs
             // calculate something for us to return
             int length = (activity.Text ?? string.Empty).Length;
 
-            await context.PostAsync($"Starting Luis query");
+//             await context.PostAsync($"Starting Luis query");
 
-            try
-            {
-                LuisService luis = new LuisService(new LuisModelAttribute("86684636-488d-48b3-a4c6-233ef496d3d1", "5f3fca65f0a64d68ab6d4d474b1b0fa6", LuisApiVersion.V2, "westus", true, false, true, true));
-                var luisResult = await luis.QueryAsync(activity.Text, System.Threading.CancellationToken.None);
+//             try
+//             {
+//                 LuisService luis = new LuisService(new LuisModelAttribute("86684636-488d-48b3-a4c6-233ef496d3d1", "5f3fca65f0a64d68ab6d4d474b1b0fa6", LuisApiVersion.V2, "westus", true, false, true, true));
+//                 var luisResult = await luis.QueryAsync(activity.Text, System.Threading.CancellationToken.None);
 
-                await context.PostAsync($"Luis Result received prepared.. Processing intents");
+//                 await context.PostAsync($"Luis Result received prepared.. Processing intents");
 
-                switch (luisResult.TopScoringIntent.Intent)
-                {
-                    case "":
-                    case "None":
-                        await context.PostAsync($"Please repeat your query. I did not understand...");
-                        break;
-                    case "Greeting":
-                        await context.PostAsync($"Greetings.. How may I serve you?");
-                        break;
-                    default:
-                        await context.PostAsync($"Please repeat your query. I could not recognize your intent...");
-                        break;
-                }
+//                 switch (luisResult.TopScoringIntent.Intent)
+//                 {
+//                     case "":
+//                     case "None":
+//                         await context.PostAsync($"Please repeat your query. I did not understand...");
+//                         break;
+//                     case "Greeting":
+//                         await context.PostAsync($"Greetings.. How may I serve you?");
+//                         break;
+//                     default:
+//                         await context.PostAsync($"Please repeat your query. I could not recognize your intent...");
+//                         break;
+//                 }
 
-            }
-            catch (Exception exc)
-            {
-                await context.PostAsync($"Error while processing Luis query\n{exc}");
-            }
+//             }
+//             catch (Exception exc)
+//             {
+//                 await context.PostAsync($"Error while processing Luis query\n{exc}");
+//             }
 
             // return our reply to the user
             await context.PostAsync($"You sent {activity.Text} which was {length} characters");
