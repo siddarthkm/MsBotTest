@@ -15,7 +15,7 @@ namespace LUIS_Bot_Sample.Dialogs
     {
         public Task StartAsync(IDialogContext context)
         {
-            //var task = context.PostAsync($"Hello I'm Tizen LUIS. How may I serve you.");
+            context.PostAsync($"Hello I'm Tizen LUIS. How may I serve you.");
             //task.Wait();
 
             context.Wait(MessageReceivedAsync);
@@ -59,6 +59,42 @@ namespace LUIS_Bot_Sample.Dialogs
                     case "HomeAutomation.TurnOff":
 
                         await handleHomeAutomation(context, luisResult, false);
+                        break;
+
+                    case "Music.DecreaseVolume":
+                        await context.PostAsync("Decreasing the volume");
+                        break;
+
+                    case "Music.IncreaseVolume":
+                        await context.PostAsync("Increasing the volume");
+                        break;
+
+                    case "Music.Mute":
+                        await context.PostAsync("Muting the volume");
+                        break;
+
+                    case "Music.Unmute":
+                        await context.PostAsync("Unmuting the volume");
+                        break;
+
+                    case "Music.PlayMusic":
+                        await context.PostAsync("Playing Music");
+                        break;
+
+                    case "Music.Pause":
+                        await context.PostAsync("Pausing Music");
+                        break;
+
+                    case "Music.Repeat":
+                        await context.PostAsync("Replaying Music");
+                        break;
+
+                    case "Music.Stop":
+                        await context.PostAsync("Stopping Music");
+                        break;
+
+                    case "Music.SkipForward":
+                        await context.PostAsync("Skipping current music track");
                         break;
 
                     default:
