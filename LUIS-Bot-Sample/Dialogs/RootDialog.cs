@@ -15,7 +15,7 @@ namespace LUIS_Bot_Sample.Dialogs
     {
         public Task StartAsync(IDialogContext context)
         {
-            context.PostAsync($"Hello I'm Tizen LUIS. How may I serve you.");
+            //context.PostAsync($"Hello I'm Tizen LUIS. How may I serve you.");
             //task.Wait();
 
             context.Wait(MessageReceivedAsync);
