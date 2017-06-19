@@ -52,31 +52,13 @@ namespace LUIS_Bot_Sample.Dialogs
                         break;
 
                     case "HomeAutomation.TurnOn":
-                        //await context.PostAsync($"Turning on the device..");
 
-                        var entities = luisResult.Entities;
+                        await handleHomeAutomation(context, luisResult, true);
+                        break;
 
-                        bool found = false;
-                        string device = "";
+                    case "HomeAutomation.TurnOff":
 
-                        foreach (var x in entities)
-                        {
-                            if (x.Type == "HomeAutomation.Device")
-                            {
-                                found = true;
-                                device = x.Entity;
-                                break;
-                            }
-                        }
-
-                        if (found)
-                        {
-                            await context.PostAsync($"Turning on the {device}");
-                        }
-                        else
-                        {
-                            await context.PostAsync($"I did not recognize a device to turn on...\nPlease repeat your command with the device name");
-                        }
+                        await handleHomeAutomation(context, luisResult, false);
                         break;
 
                     default:
@@ -94,7 +76,41 @@ namespace LUIS_Bot_Sample.Dialogs
             context.Wait(MessageReceivedAsync);
             //await context.Forward(new RootLuisDialog(), MessageReceivedAsync, activity, System.Threading.CancellationToken.None);
         }
+
+        private async Task handleHomeAutomation(IDialogContext context, LuisResult result, bool on)
+        {
+            var entities = result.Entities;
+
+            bool found = false;
+            string device = "";
+            EntityRecommendation entity;
+
+            found = result.TryFindEntity("HomeAutomation.Device", out entity);
+
+            //foreach (var x in entities)
+            //{
+            //    if (x.Type == "HomeAutomation.Device")
+            //    {
+            //        found = true;
+            //        device = x.Entity;
+            //        break;
+            //    }
+            //}
+
+            if (found)
+            {
+                device = entity?.Entity;
+                await context.PostAsync($"Turning {(on ? "on" : "off")} the {device}");
+            }
+            else
+            {
+                await context.PostAsync($"I did not recognize a device to turn {(on ? "on" : "off")}...\nPlease repeat your command with the device name");
+            }
+        }
     }
+
+
+
 
     [Serializable]
     public class ErrorDialog : IDialog<object>
